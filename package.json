@@ -1,0 +1,25 @@
+{
+  "name": "nuclear-examples",
+  "version": "0.0.1",
+  "description": "Examples of NuclearJS applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jordangarcia/nuclear-examples"
+  },
+  "keywords": [
+    "nuclear"
+  ],
+  "author": "Jordan Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jordangarcia/nuclear-examples/issues"
+  },
+  "homepage": "https://github.com/jordangarcia/nuclear-examples",
+  "devDependencies": {
+    "chai": "^1.10.0"
+  }
+}
