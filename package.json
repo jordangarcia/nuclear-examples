@@ -20,6 +20,16 @@
   },
   "homepage": "https://github.com/jordangarcia/nuclear-examples",
   "devDependencies": {
-    "chai": "^1.10.0"
+    "chai": "^1.10.0",
+    "jstransform-loader": "^0.2.0",
+    "jsx-loader": "^0.12.2",
+    "jstransform": "^8.2.0",
+    "webpack": "^1.4.13"
+  },
+  "dependencies": {
+    "react": "^0.12.1",
+    "nuclear-react-mixin": "^3.0.x",
+    "immutable": "^3.3.0",
+    "nuclear-js": "^0.5.0-rc3"
   }
 }
