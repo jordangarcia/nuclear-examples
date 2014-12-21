@@ -1,5 +1,5 @@
 var Nuclear = require('nuclear-js')
-var Map = require('immutable').Map
+var toImmutable = require('nuclear-js').toImmutable
 
 module.exports = Nuclear.Store({
   getInitialState: function() {
@@ -8,15 +8,11 @@ module.exports = Nuclear.Store({
 
   initialize: function() {
     this.on('addItem', function(items, payload) {
-      var quantitiy = (payload.quantity !== undefined)
-        ? payload.quantity
-        : 1
-
-      return items.push(Map({
+      var item = toImmutable({
         name: payload.name,
         price: payload.price,
-        quantity: quantitiy,
-      }))
+      })
+      return items.push(item)
     })
   }
 })

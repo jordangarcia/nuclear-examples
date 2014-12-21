@@ -1,8 +1,8 @@
 module.exports = {
-  entry: './arno/index.js',
+  entry: './arno/index2.js',
 
   output: {
-    filename: './arno/app.js'
+    filename: './arno/app2.js'
   },
 
   module: {

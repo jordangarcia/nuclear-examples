@@ -4,7 +4,8 @@
   "description": "Examples of NuclearJS applications",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:shopping-cart-react": "webpack --config ./shopping-cart-react/webpack.config.js --progress"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,6 @@
   "dependencies": {
     "react": "^0.12.1",
     "nuclear-react-mixin": "^3.0.x",
-    "immutable": "^3.3.0",
-    "nuclear-js": "^0.5.0-rc3"
+    "nuclear-js": "optimizely/nuclear-js#next"
   }
 }

@@ -1,14 +1,8 @@
 var expect = require('chai').expect
-var Immutable = require('immutable')
+var Immutable = require('nuclear-js').Immutable
 var Map = Immutable.Map
 var List = Immutable.List
 var shoppingCart = require('../')
-
-var getItems = shoppingCart.getters.items
-var getTaxPercent = shoppingCart.getters.taxPercent
-var getSubtotal = shoppingCart.getters.subtotal
-var getTax = shoppingCart.getters.tax
-var getTotal = shoppingCart.getters.total
 
 describe("shoppingCart", function() {
   afterEach(function() {
@@ -16,7 +10,7 @@ describe("shoppingCart", function() {
   })
 
   it('shouuld have the correct initial state', function() {
-    var isEmptyList = Immutable.is(shoppingCart.get(getItems), Immutable.List())
+    var isEmptyList = Immutable.is(shoppingCart.get(getItems), List())
     expect(isEmptyList).to.equal(true)
     expect(shoppingCart.get(getTaxPercent)).to.equal(0)
     expect(shoppingCart.get(getSubtotal)).to.equal(0)

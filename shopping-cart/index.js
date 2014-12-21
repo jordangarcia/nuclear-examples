@@ -1,43 +1,49 @@
-var Getter = require('nuclear-js').Getter
-var reactor = require('./reactor')
+var Nuclear = require('nuclear-js')
+var Observable = require('nuclear-js').Observable
+var itemStore = require('./item-store')
+var taxPercentStore = require('./tax-percent-store')
 
-/**
- * Expose a public interface for other modules to
- * use the shopping cart
- */
-var getSubtotal = Getter('items', function(items) {
+var dispatcher = Nuclear.Dispatcher()
+dispatcher.registerStores({
+  items: itemStore,
+  taxPercent: taxPercentStore,
+})
+
+var itemsObservable = itemStore.createObservable()
+
+var subtotalObservable = itemStore.createObservable(items => {
   return items.reduce(function(total, item) {
-    return total + (item.get('quantity') * item.get('price'))
+    return total + item.get('price')
   }, 0)
 })
 
-var getTax = Getter(
-  getSubtotal,
-  'taxPercent',
-  function(subtotal, taxPercent) {
+var taxPercentObservable = taxPercentStore.createObservable()
+
+var taxObservable = Observable.compose([
+  subtotalObservable,
+  taxPercentObservable,
+  (subtotal, taxPercent) => {
     return (subtotal * (taxPercent / 100))
-  })
+  }
+])
 
-var getTotal = Getter(
-  getSubtotal,
-  getTax,
-  function(subtotal, tax) {
-    return subtotal + tax
-  })
+var totalObservable = Observable.compose([
+  subtotalObservable,
+  taxObservable,
+  (subtotal, tax) => subtotal + tax
+])
 
-// expose getters on reactor
-reactor.getters = {
-  items: Getter('items'),
-  taxPercent: Getter('taxPercent'),
-  subtotal: getSubtotal,
-  tax: getTax,
-  total: getTotal,
-}
+module.exports = {
+  observables: {
+    items: itemsObservable,
+    taxPercent: taxPercentObservable,
+    subtotal: subtotalObservable,
+    tax: taxObservable,
+    total: totalObservable,
+  },
 
-// expose actions on reactor
-reactor.actions = reactor.bindActions({
-  addItem: function(reactor, name, price, quantity) {
-    reactor.dispatch('addItem', {
+  addItem(name, price, quantity) {
+    dispatcher.dispatch('addItem', {
       name: name,
       price: price,
       quantity: quantity,
@@ -45,8 +51,8 @@ reactor.actions = reactor.bindActions({
   },
 
   setTaxPercent: function(reactor, taxPercent) {
-    reactor.dispatch('setTaxPercent', taxPercent)
+    dispatcher.dispatch('setTaxPercent', taxPercent)
   },
-})
 
-module.exports = reactor
+  reset: dispatcher.reset.bind(dispatcher),
+}
